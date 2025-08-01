@@ -7,7 +7,7 @@ class Hangman
     elsif @game_mode == 'c'
       continue_game
     end
-    
+
     play_game
   end
 
@@ -16,7 +16,7 @@ class Hangman
     puts 'n: New game'
     puts 'c: Continue'
 
-    valid_inputs = ['n', 'c']
+    valid_inputs = %w(n c)
 
     loop do
       input = gets.chomp.downcase
@@ -32,17 +32,19 @@ class Hangman
     end
   end
 
-  # Assign a random word from the dictionary that has a word length of 5-12 as an answer and set @player_answer to a bunch of underscores of the same length of the answer
+  # Assign a random word from the dictionary that has a word length of 5-12 as an answer 
+  # and set @player_answer to a bunch of underscores of the same length of the answer
   def initialize_game
     dictionary = File.readlines('google-10000-english-no-swears.txt', chomp: true)
     @allowed_incorrect_guesses = 7
 
     loop do
       random_word = dictionary.sample
+
       if random_word.length.between?(5, 12)
         @answer = random_word
 
-        blank_answer = Array.new
+        blank_answer = []
 
         @answer.length.times do
           blank_answer << '_'
@@ -99,7 +101,7 @@ class Hangman
 
       @allowed_incorrect_guesses -= 1 unless correct_answer == true
     else
-      puts 'Invalid input. Try again' 
+      puts 'Invalid input. Try again'
     end
 
     false
@@ -129,7 +131,6 @@ class Hangman
 
     puts 'Game saved.'
   end
-
 end
 
 new_game = Hangman.new
